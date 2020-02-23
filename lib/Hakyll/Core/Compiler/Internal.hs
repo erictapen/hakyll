@@ -40,6 +40,7 @@ module Hakyll.Core.Compiler.Internal
 import           Control.Applicative            (Alternative (..))
 import           Control.Exception              (SomeException, handle)
 import           Control.Monad                  (forM_)
+import           Control.Monad.Fail             (MonadFail (..))
 import           Control.Monad.Except           (MonadError (..))
 import           Data.List.NonEmpty             (NonEmpty (..))
 import qualified Data.List.NonEmpty             as NonEmpty
@@ -183,6 +184,7 @@ instance Monad Compiler where
             CompilerError e       -> return $ CompilerError e
     {-# INLINE (>>=) #-}
 
+instance MonadFail Compiler where
     fail = compilerThrow . return
     {-# INLINE fail #-}
 
